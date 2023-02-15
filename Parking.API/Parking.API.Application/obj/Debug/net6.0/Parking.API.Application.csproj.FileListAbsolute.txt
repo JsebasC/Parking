@@ -1,0 +1,15 @@
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\bin\Debug\net6.0\Parking.API.Application.deps.json
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\bin\Debug\net6.0\Parking.API.Application.dll
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\bin\Debug\net6.0\Parking.API.Application.pdb
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\bin\Debug\net6.0\Parking.API.Domain.dll
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\bin\Debug\net6.0\Parking.API.Domain.pdb
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\Parking.API.Application.csproj.AssemblyReference.cache
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\Parking.API.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\Parking.API.Application.AssemblyInfoInputs.cache
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\Parking.API.Application.AssemblyInfo.cs
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\Parking.API.Application.csproj.CoreCompileInputs.cache
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\Parking.API.Application.csproj.CopyComplete
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\Parking.API.Application.dll
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\refint\Parking.API.Application.dll
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\Parking.API.Application.pdb
+C:\Users\sebastian.cuellar\Desktop\APP\Parking.API\Parking.API.Application\obj\Debug\net6.0\ref\Parking.API.Application.dll
