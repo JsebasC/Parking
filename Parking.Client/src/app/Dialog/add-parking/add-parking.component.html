@@ -1,0 +1,64 @@
+<h1 mat-dialog-title>{{ tituloAction }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formParking">
+    <mat-grid-list cols="1" rowHeight="80px">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Placa</mat-label>
+          <input
+            matInput
+            formControlName="plate"
+            placeholder="Placa"
+            autocomplete="off"
+            maxlength="6"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Centimetros cubicos</mat-label>
+          <input
+            matInput
+            formControlName="cubicCentimeters"
+            placeholder="CC"
+            autocomplete="off"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo vehiculo</mat-label>
+          <select
+            matNativeControl
+            formControlName="vehicleType"
+            required 
+            (change)="onVehicleTypeChange($event)">
+            <option value="0" >Moto</option>
+            <option value="1" >Carro</option>
+          </select> 
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>Espacios</mat-label>
+          <mat-select formControlName="idParkingSpace">
+            <mat-option *ngFor="let item of filteredSpaces" [value]="item.id">
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>Volver</button>
+  <button mat-raised-button (click)="addParking()" [disabled]="formParking.invalid">
+    {{ botonAction }}
+  </button>
+</div>
