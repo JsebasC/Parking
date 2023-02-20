@@ -2066,6 +2066,11 @@
       "Parking.API.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "FluentValidation": "11.4.0",
+          "MediatR": "11.1.0",
+          "Microsoft.AspNetCore.Mvc.Core": "2.2.5"
+        },
         "compile": {
           "bin/placeholder/Parking.API.Domain.dll": {}
         },

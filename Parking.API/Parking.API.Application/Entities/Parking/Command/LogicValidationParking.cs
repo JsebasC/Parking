@@ -52,7 +52,7 @@ namespace Parking.API.Application.Entities.Parking.Command
         /// <exception cref="Validation.Exceptions.LogicException"></exception>
         private void QuantitySpace(bool flagManage,Domain.Entities.ParkingSpaces entitySpace)
         {
-            int? spaceBusy = 0;
+            int? spaceBusy = entitySpace.BusySpace;
             if (flagManage)
             {
                 spaceBusy = ++entitySpace.BusySpace;
@@ -65,6 +65,9 @@ namespace Parking.API.Application.Entities.Parking.Command
                 if (spaceBusy < entitySpace.BusySpace)
                     throw new Validation.Exceptions.LogicException($"No puedes darle mas salida al bloque {entitySpace.Name}");
             }
+
+            //if (spaceBusy< 0)
+            //    spaceBusy = 0;
 
             _dapperSource.Execute(
                "UPDATE dbo.ParkingSpaces SET BusySpace = @BusySpace WHERE id = @id",

@@ -4,7 +4,7 @@ namespace Parking.API.Domain.Entities
 {
     public class ParkingRate : EntityBase<Guid>
     {        
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public decimal Value { get; set; }
         public int Time { get; set; } //Hora        
         public int VehicleType { get; set; }

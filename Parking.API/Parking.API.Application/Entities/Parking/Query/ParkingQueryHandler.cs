@@ -3,7 +3,6 @@ using Dapper;
 using MediatR;
 using Parking.API.Application.DTOS.Responses;
 using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.DataAccess;
 using System.Data;
 
 namespace Parking.API.Application.Entities.Parking.Query

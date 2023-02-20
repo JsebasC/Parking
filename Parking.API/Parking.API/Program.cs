@@ -3,8 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Parking.API.Application.Validation.Filters;
 using Parking.API.Infrastructure.Data;
 using Parking.API.Infrastructure.HandlerDependency;
@@ -81,19 +79,11 @@ if (app.Environment.IsDevelopment())
 app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();
-    //.RequireCors("MyPoliceCors");
+    endpoints.MapControllers();    
 });
 
 //app.UseHttpsRedirection();
-app.UseAuthorization();
+//app.UseAuthorization();
 app.MapControllers();
 app.Run();
-
-
-
-//builder.Services.AddScoped<IRequest<List<VehicleDTO>>, VehicleRequest>()*/;
-//builder.Services.AddScoped<IRepository<Vehicle>, Repository<Vehicle>>();
-//builder.Services.AddTransient<IRequestHandler<VehicleRequest, List<VehicleDTO>>, VehicleQueryHandler>();
-//builder.Services.AddMediatR(typeof(VehicleQueryHandler).Assembly);    
 

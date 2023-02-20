@@ -38,7 +38,7 @@ namespace Parking.API.Controllers
                     
                     ParkingDTO parkingSpaceDTO = new ParkingDTO();
                     parkingSpaceDTO.VehicleID = savedEntity.Id;
-                    parkingSpaceDTO.ParkingSpacesID =new Guid(entity.idParkingSpace);
+                    parkingSpaceDTO.ParkingSpacesID =new Guid(entity.idParkingSpace!);
                     var parking = await _mediator.Send(new ParkingCreateRequest { Parking = parkingSpaceDTO });
                     transaction.Commit();
                     return Ok();

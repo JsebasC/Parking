@@ -3,7 +3,7 @@ using FluentValidation;
 using MediatR;
 using Parking.API.Application.DTOS.Request;
 using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.DataAccess;
+using Parking.API.Domain.Ports;
 
 namespace Parking.API.Application.Entities.ParkingSpaces.Command
 {
@@ -11,7 +11,7 @@ namespace Parking.API.Application.Entities.ParkingSpaces.Command
     public record ParkingSpaceUpdateRequest : IRequest<ParkingSpaceResponseDTO>
     {
         public Guid Id { get; set; }
-        public ParkingSpaceResponseDTO ParkingSpace { get; set; }
+        public ParkingSpaceResponseDTO? ParkingSpace { get; set; }
     }
 
     public class ParkingSpaceUpdateHandler : IRequestHandler<ParkingSpaceUpdateRequest, ParkingSpaceResponseDTO>
@@ -27,7 +27,7 @@ namespace Parking.API.Application.Entities.ParkingSpaces.Command
         public async Task<ParkingSpaceResponseDTO> Handle(ParkingSpaceUpdateRequest request, CancellationToken cancellationToken)
         {
             
-            if (request.Id != request.ParkingSpace.Id)
+            if (request.Id != request.ParkingSpace!.Id)
                 throw new NotFoundException(nameof(request),request.Id);
 
             var entity = _mapper.Map<Domain.Entities.ParkingSpaces>(request.ParkingSpace);      
@@ -41,8 +41,8 @@ namespace Parking.API.Application.Entities.ParkingSpaces.Command
     {
         public ParkingSpaceUpdateValidator()
         {
-            RuleFor(r => r.ParkingSpace.Name).NotEmpty().WithMessage("La placa no debe estar vacia");
-            RuleFor(r => r.ParkingSpace.Space).NotEmpty().WithMessage($"El espacio se debe ingresar");            
+            RuleFor(r => r.ParkingSpace!.Name).NotEmpty().WithMessage("La placa no debe estar vacia");
+            RuleFor(r => r.ParkingSpace!.Space).NotEmpty().WithMessage($"El espacio se debe ingresar");            
         }
     }
 }

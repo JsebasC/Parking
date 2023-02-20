@@ -4,7 +4,7 @@ using FluentValidation;
 using MediatR;
 using Parking.API.Application.DTOS.Responses;
 using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.DataAccess;
+using Parking.API.Domain.Ports;
 using System.Data;
 
 namespace Parking.API.Application.Entities.Vehicle.Command
@@ -13,7 +13,7 @@ namespace Parking.API.Application.Entities.Vehicle.Command
     public record VehicleUpdateRequest : IRequest<VehicleResponseDTO>
     {
         public Guid Id { get; set; }
-        public VehicleResponseDTO Vehicle { get; set; }
+        public VehicleResponseDTO? Vehicle { get; set; }
     }
 
     public class VehicleUpdateHandler : IRequestHandler<VehicleUpdateRequest, VehicleResponseDTO>
@@ -34,7 +34,7 @@ namespace Parking.API.Application.Entities.Vehicle.Command
             if (existVehicle == null)
                 throw new Validation.Exceptions.LogicException($"El vehiculo no existe");
 
-            if (request.Id != request.Vehicle.Id)
+            if (request.Id != request.Vehicle!.Id)
                 throw new NotFoundException(nameof(request),request.Id);
 
             var entity = _mapper.Map<Domain.Entities.Vehicle>(request.Vehicle);
@@ -47,7 +47,7 @@ namespace Parking.API.Application.Entities.Vehicle.Command
     {
         public VehicleUpdateValidator()
         {
-            RuleFor(r => r.Vehicle.Plate).NotEmpty().WithMessage("La placa no debe estar vacia").Length(6,6).WithMessage("La placa debe contener 6 caracteres");
+            RuleFor(r => r.Vehicle!.Plate).NotEmpty().WithMessage("La placa no debe estar vacia").Length(6,6).WithMessage("La placa debe contener 6 caracteres");
           
         }
     }

@@ -18,19 +18,18 @@ namespace Parking.API.Application.Utils
             string dateString = DateTime.Now.ToString("D");
             if ((numero % 2 == 0) && !FlagTodayOddEvenDay)
             {
-                mensaje += "el vehiculo no puede entrar hoy,";
-                mensaje += string.Format("El numero es par y hoy entran los impares segun el dia de hoy : {0} ", dateString);
+                mensaje += "El vehiculo no puede entrar hoy,";
+                mensaje += string.Format("el numero es par y hoy entran los impares segun el dia de hoy : {0} ", dateString);
                 throw new Validation.Exceptions.LogicException(mensaje);
             }
 
             if (!(numero % 2 == 0) && FlagTodayOddEvenDay)
             {
-                mensaje += "el vehiculo no puede entrar hoy,";
-                mensaje += string.Format("El numero es impar y hoy entran los pares segun el dia de hoy : {0}", dateString);
+                mensaje += "El vehiculo no puede entrar hoy,";
+                mensaje += string.Format("el numero es impar y hoy entran los pares segun el dia de hoy : {0}", dateString);
                 throw new Validation.Exceptions.LogicException(mensaje);
             }
         }
-
 
         /// <summary>
         /// Obtener minutos transcurridos en el parqueadero
@@ -40,7 +39,7 @@ namespace Parking.API.Application.Utils
         /// <returns></returns>
         public static TimeSpan GetDifferenceExit(DateTime entryDate, DateTime? exitDate)
         {
-            TimeSpan difference = (TimeSpan)(exitDate-entryDate);
+            TimeSpan difference = (TimeSpan)(exitDate-entryDate)!;
             return difference;
         }
 

@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="Entities\ParkingVehicle\**" />
+    <Compile Remove="Validation\**" />
     <EmbeddedResource Remove="Entities\ParkingVehicle\**" />
+    <EmbeddedResource Remove="Validation\**" />
     <None Remove="Entities\ParkingVehicle\**" />
+    <None Remove="Validation\**" />
   </ItemGroup>
 
   <ItemGroup>

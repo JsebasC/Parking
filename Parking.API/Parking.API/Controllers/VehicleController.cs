@@ -1,9 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Parking.API.Application.DTOS.Request;
 using Parking.API.Application.DTOS.Responses;
-using Parking.API.Application.Entities.Parking.Command;
 using Parking.API.Application.Entities.Vehicle.Command;
 using Parking.API.Application.Entities.Vehicle.Query;
 
@@ -20,14 +18,14 @@ namespace Parking.API.Controllers
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id){           
-            var entitie= await _mediator.Send(new VehicleByIdRequest { Id = id });                            
+            var entitie= await _mediator.Send(new VehicleByIdQuery(id));                            
             return Ok(entitie);          
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var entities = await _mediator.Send(new VehicleRequest());
+            var entities = await _mediator.Send(new VehicleQuery());
             if (entities == null)
             {
                 return NotFound();

@@ -3,15 +3,11 @@ using MediatR;
 using Parking.API.Application.DTOS.Request;
 using Parking.API.Application.DTOS.Responses;
 using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.DataAccess;
+using Parking.API.Domain.Ports;
 
 namespace Parking.API.Application.Entities.Vehicle.Query
-{
-    public class VehicleByIdRequest : IRequest<VehicleResponseDTO>
-    {
-        public Guid Id { get; set; }
-    }
-    public class VehicleQueryByIdHandler : IRequestHandler<VehicleByIdRequest, VehicleResponseDTO>
+{   
+    public class VehicleQueryByIdHandler : IRequestHandler<VehicleByIdQuery, VehicleResponseDTO>
     {
         private readonly IRepository<Domain.Entities.Vehicle> _repository;
         private readonly IMapper _mapper;
@@ -22,10 +18,9 @@ namespace Parking.API.Application.Entities.Vehicle.Query
             _mapper = mapper;
         }
 
-        public async Task<VehicleResponseDTO> Handle(VehicleByIdRequest request, CancellationToken cancellationToken)
+        public async Task<VehicleResponseDTO> Handle(VehicleByIdQuery request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetById(request.Id);
-
             if (entity == null)
                 throw new NotFoundException(nameof(request), request.Id);
 

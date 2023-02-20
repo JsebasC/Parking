@@ -2,12 +2,10 @@
 using Dapper;
 using FluentValidation;
 using MediatR;
-using Microsoft.Net.Http.Headers;
 using Parking.API.Application.DTOS.Request;
 using Parking.API.Application.DTOS.Responses;
 using Parking.API.Application.Entities.Parking.Command;
-using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.DataAccess;
+using Parking.API.Domain.Ports;
 using System.Data;
 using static Dapper.SqlMapper;
 
@@ -16,7 +14,7 @@ namespace Parking.API.Application.Entities.Vehicle.Command
 
     public record VehicleCreateRequest : IRequest<VehicleResponseDTO>
     {
-        public VehicleDTO Vehicle { get; set; }
+        public VehicleDTO? Vehicle { get; set; }
     }
 
     public class ParkingRateCreateHandler : IRequestHandler<VehicleCreateRequest, VehicleResponseDTO>
@@ -44,7 +42,7 @@ namespace Parking.API.Application.Entities.Vehicle.Command
             var existVehicle = _dapperSource.QueryFirstOrDefault<Domain.Entities.Vehicle>("select top 1 v.* from dbo.Vehicle v where v.Plate = @Plate ", new { Plate = entity.Plate });
              if (existVehicle != null)
                 return await Task.FromResult(_mapper.Map<VehicleResponseDTO>(existVehicle));
-
+            
             await _repository.Insert(entity);
             return await Task.FromResult(_mapper.Map<VehicleResponseDTO>(entity));
 
@@ -56,7 +54,7 @@ namespace Parking.API.Application.Entities.Vehicle.Command
     {
         public VehicleCreateValidator()
         {
-            RuleFor(r => r.Vehicle.Plate).NotEmpty().WithMessage("La placa no debe estar vacia");           
+            RuleFor(r => r.Vehicle!.Plate).NotEmpty().WithMessage("La placa no debe estar vacia");           
         }
     }
 

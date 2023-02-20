@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.DataAccess;
+using Parking.API.Domain.Ports;
 
 namespace Parking.API.Application.Entities.Parking.Command
 {

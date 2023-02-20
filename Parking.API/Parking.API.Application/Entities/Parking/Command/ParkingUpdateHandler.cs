@@ -4,7 +4,7 @@ using FluentValidation;
 using MediatR;
 using Parking.API.Application.DTOS.Responses;
 using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.DataAccess;
+using Parking.API.Domain.Ports;
 using System.Data;
 using static Dapper.SqlMapper;
 
@@ -14,7 +14,7 @@ namespace Parking.API.Application.Entities.Parking.Command
     public record ParkingUpdateRequest : IRequest<ParkingResponseDTO>
     {
         public Guid Id { get; set; }
-        public ParkingUpdateDTO Parking { get; set; }
+        public ParkingUpdateDTO? Parking { get; set; }
     }
 
     public class ParkingUpdateHandler : IRequestHandler<ParkingUpdateRequest, ParkingResponseDTO>
@@ -34,7 +34,7 @@ namespace Parking.API.Application.Entities.Parking.Command
         {
 
             var parking = _dapperSource.QuerySingleOrDefault<Domain.Entities.Parking>("select * from dbo.Parking where Id = @Id ", new { Id = request.Id });
-            if (parking == null || request.Id != request.Parking.Id)
+            if (parking == null || request.Id != request.Parking!.Id)
                 throw new NotFoundException(nameof(request), request.Id);
             if(parking.ExitDate!= null)
                 throw new LogicException("Ya se le dio salida a este vehiculo");

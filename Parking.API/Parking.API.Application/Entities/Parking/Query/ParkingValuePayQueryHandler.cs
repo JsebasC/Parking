@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using Dapper;
 using MediatR;
-using Parking.API.Application.DTOS.Request;
 using Parking.API.Application.DTOS.Responses;
 using Parking.API.Application.Entities.Parking.Command;
-using Parking.API.Application.Repositories;
 using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.Entities;
-using System;
+using Parking.API.Domain.Ports;
 using System.Data;
 using static Dapper.SqlMapper;
 
@@ -16,7 +13,7 @@ namespace Parking.API.Application.Entities.Parking.Query
 
     public class ParkingValuePayRequest : IRequest<ParkingResponseDTO>
     {
-        public string Plate { get; set; }
+        public string Plate { get; set; } = string.Empty;
     }
     public class ParkingValuePayQueryHandler : IRequestHandler<ParkingValuePayRequest, ParkingResponseDTO>
     {

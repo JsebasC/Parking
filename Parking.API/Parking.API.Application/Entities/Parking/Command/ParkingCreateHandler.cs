@@ -4,7 +4,7 @@ using FluentValidation;
 using MediatR;
 using Parking.API.Application.DTOS.Request;
 using Parking.API.Application.Validation.Exceptions;
-using Parking.API.Domain.DataAccess;
+using Parking.API.Domain.Ports;
 using System.Data;
 
 namespace Parking.API.Application.Entities.Parking.Command
@@ -12,7 +12,7 @@ namespace Parking.API.Application.Entities.Parking.Command
 
     public record ParkingCreateRequest : IRequest<ParkingDTO>
     {
-        public ParkingDTO Parking { get; set; }
+        public ParkingDTO? Parking { get; set; }
     }
 
     public class ParkingCreateHandler : IRequestHandler<ParkingCreateRequest, ParkingDTO>
@@ -103,8 +103,8 @@ namespace Parking.API.Application.Entities.Parking.Command
         public ParkingCreateValidator()
         {
             //RuleFor(r => r.Parking.EntryDate).NotEmpty().WithMessage("La fecha de entrada es obligatoria");
-            RuleFor(r => r.Parking.VehicleID).NotEmpty().WithMessage("El vehiculo es obligatorio");
-            RuleFor(r => r.Parking.ParkingSpacesID).NotEmpty().WithMessage("El espacio ocupado es obligatorio");            
+            RuleFor(r => r.Parking!.VehicleID).NotEmpty().WithMessage("El vehiculo es obligatorio");
+            RuleFor(r => r.Parking!.ParkingSpacesID).NotEmpty().WithMessage("El espacio ocupado es obligatorio");            
         }
     }
 

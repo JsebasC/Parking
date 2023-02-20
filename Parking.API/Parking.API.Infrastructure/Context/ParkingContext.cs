@@ -5,13 +5,13 @@ using Parking.API.Domain.Entities;
 namespace Parking.API.Infrastructure.Data
 {
     public class ParkingContext : DbContext
-    {        
+    {
 
-        public ParkingContext(DbContextOptions<ParkingContext> options) : base(options){     }
+        public ParkingContext(DbContextOptions<ParkingContext> options) : base(options) { }
 
-        public DbSet<Vehicle> Vehicle { get; set; }
-        public DbSet<ParkingSpaces> ParkingSpaces { get; set; }
-        public DbSet<Domain.Entities.Parking>  Parking { get; set; }
+        public DbSet<Vehicle>? Vehicle { get; set; }
+        public DbSet<ParkingSpaces>? ParkingSpaces { get; set; }
+        public DbSet<Domain.Entities.Parking>?  Parking { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder == null)

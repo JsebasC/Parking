@@ -2,10 +2,9 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Parking.API.Application.Entities.Vehicle.Command;
-using Parking.API.Application.Repositories;
 using Parking.API.Application.Services;
 using Parking.API.Application.Validation.Behaviours;
-using Parking.API.Domain.DataAccess;
+using Parking.API.Domain.Ports;
 using Parking.API.Infrastructure.Repository;
 using System.Reflection;
 
@@ -76,9 +75,7 @@ namespace Parking.API.Infrastructure.HandlerDependency
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>)); // Update
-            var assembly = typeof(VehicleCreateValidator).Assembly;
-            //var validatorTypes = assembly.GetExportedTypes()
-            //                             .Where(t => t.IsAssignableTo(typeof(AbstractValidator<VehicleCreateRequest>)));
+            var assembly = typeof(VehicleCreateValidator).Assembly;            
             var validatorTypes = assembly.GetExportedTypes()
                     .Where(t => t.GetInterfaces().Any(i =>
                         i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IValidator<>)));
