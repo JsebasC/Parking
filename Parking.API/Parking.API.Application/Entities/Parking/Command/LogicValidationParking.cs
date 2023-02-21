@@ -12,69 +12,7 @@ namespace Parking.API.Application.Entities.Parking.Command
             _dapperSource = dapperSource;
         }
   
-        /// <summary>
-        /// Manejar el espacio del parqueadero
-        /// </summary>
-        /// <param name="idParking"></param>
-        /// <param name="typeVehicle"></param>
-        /// <param name="flagManage"></param>
-        /// <exception cref="Validation.Exceptions.NotFoundException"></exception>
-        /// <exception cref="Validation.Exceptions.LogicException"></exception>
-        public void ManageSpace(Guid idParking, int typeVehicle, bool flagManage)
-        {
-            var sql = "select * from dbo.ParkingSpaces where Id = @Id and VehicleType =@VehicleType ";
-            var entitySpace = _dapperSource.QuerySingleOrDefault<Domain.Entities.ParkingSpaces>(sql, new { Id = idParking, VehicleType = typeVehicle });        
-            if (entitySpace == null)
-                throw new Validation.Exceptions.NotFoundException($"El espacio no corresponde al tipo de vehiculo");
-            QuantitySpace(flagManage, entitySpace);
-        }
-
-        /// <summary>
-        /// Manejar la cantidad de espacios por bloques
-        /// </summary>
-        /// <param name="idParking"></param>
-        /// <param name="flagManage"></param>
-        /// <exception cref="Validation.Exceptions.NotFoundException"></exception>
-        public void ManageSpace(Guid idParking, bool flagManage)
-        {
-            var sql = "select * from dbo.ParkingSpaces where Id = @Id ";
-            var entitySpace = _dapperSource.QuerySingleOrDefault<Domain.Entities.ParkingSpaces>(sql, new { Id = idParking });
-            if (entitySpace == null)
-                throw new Validation.Exceptions.NotFoundException($"El espacio no corresponde al tipo de vehiculo");
-            QuantitySpace(flagManage, entitySpace);
-        }
-
-        /// <summary>
-        /// Si sale o entra
-        /// </summary>
-        /// <param name="flagManage"></param>
-        /// <param name="entitySpace"></param>
-        /// <exception cref="Validation.Exceptions.LogicException"></exception>
-        private void QuantitySpace(bool flagManage,Domain.Entities.ParkingSpaces entitySpace)
-        {
-            int? spaceBusy = entitySpace.BusySpace;
-            if (flagManage)
-            {
-                spaceBusy = ++entitySpace.BusySpace;
-                if (spaceBusy > entitySpace.BusySpace)
-                    throw new Validation.Exceptions.LogicException($"El {entitySpace.Name} llego a su limite");
-            }
-            else
-            {
-                spaceBusy = --entitySpace.BusySpace;
-                if (spaceBusy < entitySpace.BusySpace)
-                    throw new Validation.Exceptions.LogicException($"No puedes darle mas salida al bloque {entitySpace.Name}");
-            }
-
-            //if (spaceBusy< 0)
-            //    spaceBusy = 0;
-
-            _dapperSource.Execute(
-               "UPDATE dbo.ParkingSpaces SET BusySpace = @BusySpace WHERE id = @id",
-               new { BusySpace = spaceBusy, Id = entitySpace.Id });
-        }
-
-
+      
         #region MyRegion
 
 
@@ -165,27 +103,8 @@ namespace Parking.API.Application.Entities.Parking.Command
 
             return TotalValue;
         }
-
         #endregion
 
     }
-
-
-
-
 }
 
-
-
-//var sql = @"select p.*, V.* from dbo.Parking p JOIN dbo.Vehicle v With(nolock) ON p.VehicleID = v.id where P.Id = @Ids";
-//var parameters = new DynamicParameters();
-//parameters.Add("@Ids", request.Id);
-
-//var parkingResult = await _dapperSource.QueryAsync<Domain.Entities.Parking, Domain.Entities.Vehicle, Domain.Entities.Parking>(
-//      sql,
-//      (parking, vehicle) => {
-//          parking.Vehicle = vehicle;
-//          return parking;
-//      }, splitOn: "VehicleID");
-
-//var parking = parkingResult.FirstOrDefault();

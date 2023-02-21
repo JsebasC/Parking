@@ -15,25 +15,25 @@ import { ParkingRequest } from '../Model/parking-request';
 export class ParkingService {
 
   private endpoint: string = environment.endPoint;
-  private apiUrl: string = this.endpoint;
+  private apiUrl: string = this.endpoint  + 'Parking';;
 
   
   constructor(private http: HttpClient) { }
   
   getListNoExitVehicle(): Observable<Parking[]>{   
-    return this.http.get<Parking[]>(`${this.apiUrl}Parking/GetAllNotExitVehicle`);
+    return this.http.get<Parking[]>(`${this.apiUrl}/GetAllNotExitVehicle`);
   }
 
   getValueExitVehicle(plate: string): Observable<Parking>{
-    return this.http.get<Parking>(`${this.apiUrl}Parking/GetValuePayExitVehicle/${plate}`);
+    return this.http.get<Parking>(`${this.apiUrl}/GetValuePayExitVehicle/${plate}`);
   }
 
   add(model: ParkingRequest): Observable<ParkingRequest>{
-    return this.http.post<ParkingRequest>(`${this.apiUrl}ParkingVehicle`,model);
+    return this.http.post<ParkingRequest>(`${this.apiUrl}/ParkingVehicle`,model);
   } 
 
   exitVehicle(id: string, model: Parking): Observable<Parking>{    
-    return this.http.put<Parking>(`${this.apiUrl}Parking/ExitVehicle/${id}`,model);
+    return this.http.put<Parking>(`${this.apiUrl}/ExitVehicle/${id}`,model);
   }
 
   // update(idParking:string,model: Parking): Observable<Parking>{

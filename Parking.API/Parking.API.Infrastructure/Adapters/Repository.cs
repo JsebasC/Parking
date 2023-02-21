@@ -79,7 +79,7 @@ namespace Parking.API.Infrastructure.Repository
         }
 
         public async Task Insert(T entity)
-        {
+        {            
             await EntitySet.AddAsync(entity);
             await Save();
         }

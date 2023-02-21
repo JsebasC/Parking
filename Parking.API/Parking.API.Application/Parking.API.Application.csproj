@@ -8,10 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Entities\ParkingVehicle\**" />
+    <Compile Remove="Utils\**" />
     <Compile Remove="Validation\**" />
     <EmbeddedResource Remove="Entities\ParkingVehicle\**" />
+    <EmbeddedResource Remove="Utils\**" />
     <EmbeddedResource Remove="Validation\**" />
     <None Remove="Entities\ParkingVehicle\**" />
+    <None Remove="Utils\**" />
     <None Remove="Validation\**" />
   </ItemGroup>
 

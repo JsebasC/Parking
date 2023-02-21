@@ -5,6 +5,7 @@ using Parking.API.Application.DTOS.Responses;
 using Parking.API.Application.Entities.Parking.Command;
 using Parking.API.Application.Validation.Exceptions;
 using Parking.API.Domain.Ports;
+using System;
 using System.Data;
 using static Dapper.SqlMapper;
 
@@ -30,7 +31,7 @@ namespace Parking.API.Application.Entities.Parking.Query
         }
         public async Task<ParkingResponseDTO> Handle(ParkingValuePayRequest request, CancellationToken cancellationToken)
         {
-
+            //PROBAR CON JMTER
             //Domain.Entities.Parking entities = await _parkingRepository.GetAllPayVehicle(request.Plate);
 
             var sql = $"SELECT p.Id Id, v.Id VehicleID,v.Plate Vehicle, ps.Id ParkingSpacesID, ps.Name ParkingSpaces,EntryDate,ExitDate,Second,TotalValue,v.CubicCentimeters FROM dbo.Parking p " +
@@ -40,19 +41,22 @@ namespace Parking.API.Application.Entities.Parking.Query
 
             if (entities == null)
                 throw new LogicException("No existe ningun vehiculo dentro del parqueadero con esa placa ");
-            
-            Random random = new Random();
+                        
+            //PROBAR CON JMTER
+            // Random random = new Random();
             //entities.ExitDate = entities.EntryDate.AddDays(random.Next(1, 365)).AddHours(random.Next(1,24)).AddMinutes(random.Next(1,60));           
             entities.ExitDate = DateTime.Now;
 
             LogicValidationParking logicValidationParking = new LogicValidationParking(_dapperSource);
+            Utils.Utils.ExitValidation(entities.EntryDate, entities.ExitDate);
             var getDifferenceExit = Utils.Utils.GetDifferenceExit(entities.EntryDate, entities.ExitDate);
-
             entities.Second = (long)getDifferenceExit.TotalSeconds;
-
             entities.TotalValue = logicValidationParking.CalculateValueTotal(entities.EntryDate, entities.ExitDate, getDifferenceExit, entities.VehicleID);
+
+            //PROBAR CON JMTER
             //logicValidationParking.ManageSpace(entities.ParkingSpacesID, false); //aca salio
 
+            //PROBAR CON JMTER
             //return await Task.FromResult(_mapper.Map<ParkingResponseDTO>(entities));
             return await Task.FromResult(entities);
         }

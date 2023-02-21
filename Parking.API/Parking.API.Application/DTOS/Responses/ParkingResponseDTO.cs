@@ -17,7 +17,7 @@ namespace Parking.API.Application.DTOS.Responses
             get
             {
                 var vehicleTypeAttribute = (Second?)Attribute.GetCustomAttribute(typeof(ParkingResponseDTO).GetProperty("Second")!, typeof(Second));
-                return vehicleTypeAttribute!.GetGenderString(ExitDate, EntryDate);
+                return vehicleTypeAttribute!.GetDurationString(ExitDate, EntryDate);
             }
         }
         public decimal? TotalValue { get; set; }
@@ -28,7 +28,7 @@ namespace Parking.API.Application.DTOS.Responses
             get
             {
                 var vehicleTypeAttribute = (VehicleType?)Attribute.GetCustomAttribute(typeof(ParkingResponseDTO).GetProperty("VehicleType")!, typeof(VehicleType));
-                return vehicleTypeAttribute!.GetGenderString(VehicleType);
+                return vehicleTypeAttribute!.GetVehicleString(VehicleType);
             }
         }
         public int CubicCentimeters { get; set; }
@@ -38,7 +38,7 @@ namespace Parking.API.Application.DTOS.Responses
     [AttributeUsage(AttributeTargets.Property)]
     public class Second : Attribute
     {
-        public string GetGenderString(DateTime? exitDate, DateTime entryDate)
+        public string GetDurationString(DateTime? exitDate, DateTime entryDate)
         {
             if (exitDate == null)
                 return "No ha salido";

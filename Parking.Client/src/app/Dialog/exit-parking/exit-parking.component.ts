@@ -27,7 +27,7 @@ export class ExitParkingComponent implements OnInit {
   ) { }
 
   valuePay(plate: string) {
-    this._parkingService.getValueExitVehicle(plate).subscribe(data => {      
+    this._parkingService.getValueExitVehicle(plate).subscribe(data => {            
       this.vehiclePay = data;
     });
   }
@@ -39,7 +39,7 @@ export class ExitParkingComponent implements OnInit {
         this.dialogReference.close();
       },
       (e) => {                
-        this.openAlert(e.error, 'Error');
+        this.openAlert(e.error.detail, 'Error');
       }
     );
   }

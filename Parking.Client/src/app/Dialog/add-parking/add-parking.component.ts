@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, DebugElement, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -69,8 +69,8 @@ export class AddParkingComponent implements OnInit {
         this.openAlert('Se ha creado correctamente la entrada ', 'Listo');
         this.dialogReference.close();
       },
-      (e) => {
-        this.openAlert(e.error, 'Error');
+      (e) => {        
+        this.openAlert(e.error.detail, 'Error');
       }
     );
     

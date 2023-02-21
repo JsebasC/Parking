@@ -22,6 +22,7 @@ namespace Parking.API.Application.Entities.Parking.Query
             var sql = $"SELECT p.Id Id, v.Id VehicleID,v.Plate Vehicle, ps.Id ParkingSpacesID, ps.Name ParkingSpaces,EntryDate,ExitDate,Second,TotalValue,v.VehicleType FROM dbo.Parking p " +
             $"JOIN dbo.Vehicle v With(nolock) ON p.VehicleID = v.id " +
             $"JOIN dbo.ParkingSpaces ps With(nolock) ON p.ParkingSpacesID = ps.Id where ExitDate IS NULL";
+            
 
             var entities = await _dapperSource.QueryAsync<ParkingResponseDTO>(sql);
             if (entities == null)

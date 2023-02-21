@@ -15,7 +15,7 @@ namespace Parking.API.Application.DTOS.Responses
             get
             {
                 var vehicleTypeAttribute = (VehicleType?)Attribute.GetCustomAttribute(typeof(VehicleResponseDTO).GetProperty("VehicleType")!, typeof(VehicleType));
-                return vehicleTypeAttribute!.GetGenderString(VehicleType);
+                return vehicleTypeAttribute!.GetVehicleString(VehicleType);
             }
         }
     }
@@ -23,7 +23,7 @@ namespace Parking.API.Application.DTOS.Responses
     [AttributeUsage(AttributeTargets.Property)]
     public class VehicleType : Attribute
     {
-        public string GetGenderString(int VehicleType)
+        public string GetVehicleString(int VehicleType)
         {
             switch (VehicleType)
             {

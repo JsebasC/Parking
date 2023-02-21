@@ -20,9 +20,10 @@ namespace Parking.API.Application.Entities.ParkingSpaces.Command
         public async Task<bool> Handle(ParkingSpaceDeleteRequest request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetById(request.Id);
+
             if (entity == null)
                 throw new NotFoundException("The entity is null");
-
+            
             await _repository.Delete(request.Id);
             return true;
         }

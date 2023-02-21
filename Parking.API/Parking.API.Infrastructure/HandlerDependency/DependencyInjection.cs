@@ -5,6 +5,8 @@ using Parking.API.Application.Entities.Vehicle.Command;
 using Parking.API.Application.Services;
 using Parking.API.Application.Validation.Behaviours;
 using Parking.API.Domain.Ports;
+using Parking.API.Domain.Services;
+using Parking.API.Infrastructure.Adapters;
 using Parking.API.Infrastructure.Repository;
 using System.Reflection;
 
@@ -64,6 +66,11 @@ namespace Parking.API.Infrastructure.HandlerDependency
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IParkingRepository<>), typeof(ParkingRepository<>));
+            services.AddScoped(typeof(IVehicleRepository<>), typeof(VehicleRepository<>));
+
+            services.AddScoped(typeof(ParkingService));
+            services.AddScoped(typeof(VehicleParkingService));
+            
 
         }
 

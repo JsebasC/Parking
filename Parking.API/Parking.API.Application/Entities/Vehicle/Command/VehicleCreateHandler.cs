@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using Dapper;
 using FluentValidation;
 using MediatR;
 using Parking.API.Application.DTOS.Request;
 using Parking.API.Application.DTOS.Responses;
-using Parking.API.Application.Entities.Parking.Command;
 using Parking.API.Domain.Ports;
 using System.Data;
-using static Dapper.SqlMapper;
 
 namespace Parking.API.Application.Entities.Vehicle.Command
 {
@@ -32,29 +29,23 @@ namespace Parking.API.Application.Entities.Vehicle.Command
 
         public async Task<VehicleResponseDTO> Handle(VehicleCreateRequest request, CancellationToken cancellationToken)
         {            
-            var entity = _mapper.Map<Domain.Entities.Vehicle>(request.Vehicle);
-
-            var existVehicleSpace = _dapperSource.QueryFirstOrDefault<Domain.Entities.Vehicle>("select top 1 v.* from dbo.Vehicle v  " +
-                "JOIN dbo.Parking p ON v.Id = p.VehicleID where v.Plate = @Plate AND ExitDate IS NULL", new { Plate = entity.Plate });
-            if (existVehicleSpace != null)
+            
+            //var entityFind = await _repository.GetAsync(e => e.Plate == entity.Plate, orderBy: q => q.OrderBy(e => e.Id), includeStringProperties: "");
+            var entityFind = await _repository.GetAsync(e => e.Plate == request.Vehicle!.Plate);
+            if (entityFind != null)
                 throw new Validation.Exceptions.LogicException("Ya existe el vehiculo en el parqueadero");
 
-            var existVehicle = _dapperSource.QueryFirstOrDefault<Domain.Entities.Vehicle>("select top 1 v.* from dbo.Vehicle v where v.Plate = @Plate ", new { Plate = entity.Plate });
-             if (existVehicle != null)
-                return await Task.FromResult(_mapper.Map<VehicleResponseDTO>(existVehicle));
-            
+            var entity = _mapper.Map<Domain.Entities.Vehicle>(request.Vehicle);
             await _repository.Insert(entity);
             return await Task.FromResult(_mapper.Map<VehicleResponseDTO>(entity));
-
         }
-
     }
 
     public class VehicleCreateValidator : AbstractValidator<VehicleCreateRequest>
     {
         public VehicleCreateValidator()
         {
-            RuleFor(r => r.Vehicle!.Plate).NotEmpty().WithMessage("La placa no debe estar vacia");           
+            RuleFor(r => r.Vehicle!.Plate).NotEmpty().WithMessage("La placa no debe estar vacia");
         }
     }
 

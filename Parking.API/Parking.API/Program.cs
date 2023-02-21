@@ -65,9 +65,14 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddValidators();
 
+builder.Services.AddSwaggerGen(x =>
+{
+    x.EnableAnnotations();
+});
 
 var app = builder.Build();
 app.UseCors("MyPoliceCors");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -82,8 +87,6 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();    
 });
 
-//app.UseHttpsRedirection();
-//app.UseAuthorization();
 app.MapControllers();
 app.Run();
 

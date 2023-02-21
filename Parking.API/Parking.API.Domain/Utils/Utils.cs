@@ -63,21 +63,29 @@ namespace Parking.API.Application.Utils
         /// <exception cref="NotImplementedException"></exception>
         public static int GetNumberPlate(string plate, int vehicleType)
         {
-            int numero = 0;
-            if (vehicleType == 0) //moto
+            try
             {
-                string pattern = @"\d+";
-                Match match = Regex.Match(plate, pattern);
-                if (match.Success)
+                int numero = 0;
+                if (vehicleType == 0) //moto
                 {
-                    numero = Convert.ToInt32(match.Value.First().ToString());
+                    string pattern = @"\d+";
+                    Match match = Regex.Match(plate, pattern);
+                    if (match.Success)
+                    {
+                        numero = Convert.ToInt32(match.Value.First().ToString());
+                    }
                 }
+                else//carro
+                {
+                    numero = Convert.ToInt32(plate.Substring(plate.Length - 1, 1));
+                }
+                return numero;
             }
-            else//carro
+            catch (Exception)
             {
-                numero = Convert.ToInt32(plate.Substring(plate.Length - 1, 1));
+
+                throw new Validation.Exceptions.LogicException($"La combinación de placas no corresponde a un vehiculo valido");
             }
-            return numero;
         }
 
         /// <summary>
@@ -91,8 +99,32 @@ namespace Parking.API.Application.Utils
         {
             if (entryDate > exitDate)
                 throw new Validation.Exceptions.LogicException($"La fecha de entrada no puede ser mayor a la de salida");
-
         }
+
+        /// <summary>
+        /// Si sale o entra
+        /// </summary>
+        /// <param name="flagManage"></param>
+        /// <param name="entitySpace"></param>
+        /// <exception cref="Validation.Exceptions.LogicException"></exception>
+        public static int? QuantitySpace(bool flagManage, Domain.Entities.ParkingSpaces entitySpace)
+        {
+            int? spaceBusy = entitySpace.BusySpace;
+            if (flagManage)
+            {
+                spaceBusy = ++spaceBusy;
+                if (spaceBusy > entitySpace.Space)
+                    throw new Validation.Exceptions.LogicException($"El {entitySpace.Name} llego a su limite");
+            }
+            else
+            {
+                spaceBusy = --spaceBusy;
+                if (spaceBusy < 0)
+                    throw new Validation.Exceptions.LogicException($"No puedes darle mas salida al bloque {entitySpace.Name}");
+            }
+            return spaceBusy;
+        }
+
 
     }
 

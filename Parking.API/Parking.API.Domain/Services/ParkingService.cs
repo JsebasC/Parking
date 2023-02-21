@@ -1,23 +1,18 @@
-﻿using Parking.API.Domain.Entities;
-using Parking.API.Domain.Ports;
+﻿using Parking.API.Domain.Ports;
 
 namespace Parking.API.Domain.Services
 {
     public class ParkingService
     {
+        readonly IParkingRepository<Domain.Entities.Parking> _repository;
 
-        readonly IVehicleRepository<Vehicle> _repositoryVehicle;        
-        
-        public ParkingService(IRepository<Vehicle> repositoryVehicle, IRepository<Entities.Parking> repositoryParking)
-        {            
-            _repositoryVehicle = _repositoryVehicle ?? throw new ArgumentNullException(nameof(_repositoryVehicle), "No repo available");
-        }
-
-
-        public async Task InsertParkingVehicle(Vehicle vehicleEntity, Guid idParkingSpace)
+        public ParkingService(IParkingRepository<Domain.Entities.Parking> repositoryVehicle)
         {
-          await _repositoryVehicle.InsertParkingVehicle(vehicleEntity, idParkingSpace);
+            _repository = repositoryVehicle ?? throw new ArgumentNullException(nameof(repositoryVehicle), "No repo available");
+        }
+        public async Task PayParkingVehicle(Guid idParking, Entities.Parking parking)
+        {
+            await _repository.PayParkingVehicle(idParking, parking);
         }
     }
 }
-
