@@ -1,0 +1,88 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Parking</h4>
+            <p class="card-category">Ingresa un vehiculo</p>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="formParking">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      placeholder="Placa"
+                      type="text"
+                      maxlength="6"
+                      minlength="6"
+                      required
+                      pattern="[A-Za-z0-9]+"
+                      formControlName="plate"
+                      style="text-transform: uppercase" 
+                    />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input
+                      matInput
+                      formControlName="cubicCentimeters"
+                      placeholder="Centimetros Cubicos"
+                      type="number"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-select
+                      placeholder="Tipo de vehiculo"
+                      required
+                      formControlName="vehicleType"
+                      (valueChange)="onVehicleTypeChange($event)" >                      
+                      <mat-option value="0">Moto</mat-option>
+                      <mat-option value="1">Carro</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <mat-select
+            
+                      formControlName="idParkingSpace"
+                      required
+                      placeholder="Espacio" >
+                      <mat-option
+                        
+                        *ngFor="let item of filteredSpaces"
+                        [value]="item.id">
+                        {{ item.name }}
+
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-danger pull-right"
+                (click)="AddParking()"
+                [disabled]="formParking.invalid"
+              >
+                Agregar
+              </button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

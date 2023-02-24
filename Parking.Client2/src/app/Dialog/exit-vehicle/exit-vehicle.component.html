@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Salida : {{ data.vehicle }}</h1>
+<div mat-dialog-content class="mat-typography">
+  <h3>
+    Total a pagar : <b>{{ vehiclePay?.totalValue | currency }}</b>
+  </h3>
+  <p>
+    Cilindraje : {{vehiclePay?.cubicCentimeters}} <br/>
+    Fecha de salida : {{ vehiclePay?.exitDate | date : "dd/MM/yyyy HH:mm" }}
+    <br />
+    Duracion : {{ vehiclePay?.duration }}
+  </p>
+</div>
+
+<div mat-dialog-actions>
+  <button class= "mat-raised-button mat-success" mat-button mat-dialog-close (click)="ExitVehicle()">Confirmar Salida</button>
+  <button class= "mat-raised-button mat-warn"  mat-button mat-dialog-close (click)="CloseDialog()">Close</button>
+</div>
